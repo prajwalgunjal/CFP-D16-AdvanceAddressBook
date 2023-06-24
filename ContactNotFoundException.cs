@@ -8,10 +8,11 @@ namespace ExceptionHandlingAddresssBook
 {
     internal class ContactNotFoundException : Exception
     {
-       /* public ContactNotFoundException() { }
-        public ContactNotFoundException(string msg) {
+        public ContactNotFoundException() { }
+        public ContactNotFoundException(string msg)
+        {
             Console.WriteLine("This is exception class.... Contact not found");
-        }*/
+        }
 
     }
 }

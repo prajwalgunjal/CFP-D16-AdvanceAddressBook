@@ -69,10 +69,10 @@ namespace ExceptionHandlingAddresssBook
                     return;
                 }
             }
-            /*if (!found) 
+            if (!found) 
             {
                     throw new ContactNotFoundException("Contact not found........");
-            }*/
+            }
             //Console.WriteLine($"{input} not found in addressBook");
         }
 

@@ -34,18 +34,18 @@
                                 break;
 
                             }
-                     /*   case 2:
+                        case 2:
                             {
                                 try
                                 {
                                     addressBook.Display();
                                 }
-                                catch(Exception)
+                                catch (Exception)
                                 {
                                     Console.WriteLine("**********EXCEPTION***********");
                                 }
                                 break;
-                            }*/
+                            }
                         case 3:
                             {
                                 addressBook.delete();
