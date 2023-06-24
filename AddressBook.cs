@@ -40,7 +40,8 @@ namespace ExceptionHandlingAddresssBook
             }
             else
             {
-                Console.WriteLine("Duplicate Phone Number....");
+                throw new DuplicateContactFoundException("Duplicate Contact ... PLease Change name of the contact ");
+                //Console.WriteLine("Duplicate Phone Number....");
             }
         }
 
@@ -54,6 +55,7 @@ namespace ExceptionHandlingAddresssBook
 
         public void delete()
         {
+            bool found = false;
             Console.WriteLine("Enter name of the contact: ");
             string input = Console.ReadLine();
             for (int i = 0; i < contactList.Count; i++)
@@ -61,12 +63,17 @@ namespace ExceptionHandlingAddresssBook
                 Contact contact = contactList[i];
                 if (input == contact.Name)
                 {
+                    found = true;
                     contactList.Remove(contact);
                     Console.WriteLine("Contact deleted ....");
                     return;
                 }
             }
-            Console.WriteLine($"{input} not found in addressBook");
+            /*if (!found) 
+            {
+                    throw new ContactNotFoundException("Contact not found........");
+            }*/
+            //Console.WriteLine($"{input} not found in addressBook");
         }
 
         public void Edit()

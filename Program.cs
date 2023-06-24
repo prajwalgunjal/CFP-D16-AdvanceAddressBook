@@ -16,20 +16,36 @@
                 Console.WriteLine("9) Exit");
                 string choiceString = Console.ReadLine();
                 int choice;
+
                 if (int.TryParse(choiceString, out choice))
                 {
                     switch (choice)
                     {
                         case 1:
                             {
-                                addressBook.addContact();
+                                try
+                                {
+                                    addressBook.addContact();
+                                }
+                                catch(Exception)
+                                {
+                                    Console.WriteLine("**********EXCEPTION***********");
+                                }
                                 break;
+
                             }
-                        case 2:
+                     /*   case 2:
                             {
-                                addressBook.Display();
+                                try
+                                {
+                                    addressBook.Display();
+                                }
+                                catch(Exception)
+                                {
+                                    Console.WriteLine("**********EXCEPTION***********");
+                                }
                                 break;
-                            }
+                            }*/
                         case 3:
                             {
                                 addressBook.delete();
@@ -58,7 +74,7 @@
                     Console.WriteLine("Invalid choice. Please enter a valid integer choice.");
                 }
 
-            };
+            }
         }
     }
 }
