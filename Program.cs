@@ -42,7 +42,7 @@
                                 }
                                 catch (Exception)
                                 {
-                                    Console.WriteLine("**********EXCEPTION***********");
+                                    Console.WriteLine("************EXCEPTION***********");
                                 }
                                 break;
                             }
