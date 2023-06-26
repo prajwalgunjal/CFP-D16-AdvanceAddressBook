@@ -11,7 +11,7 @@ namespace ExceptionHandlingAddresssBook
         public ContactNotFoundException() { }
         public ContactNotFoundException(string msg)
         {
-            Console.WriteLine("This is exception class.... Contact not found");
+           // Console.WriteLine("This is exception class.... Contact not found");
         }
 
     }

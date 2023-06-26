@@ -40,7 +40,7 @@ namespace ExceptionHandlingAddresssBook
             }
             else
             {
-                throw new DuplicateContactFoundException("Duplicate Contact ... PLease Change name of the contact ");
+                throw new DuplicateContactFoundException("Duplicate Contact ... PLease Change name of the contact");
                 //Console.WriteLine("Duplicate Phone Number....");
             }
         }

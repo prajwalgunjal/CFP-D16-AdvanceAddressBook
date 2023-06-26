@@ -8,8 +8,8 @@ namespace ExceptionHandlingAddresssBook
 {
     internal class DuplicateContactFoundException :Exception
     {
-        public DuplicateContactFoundException(string msg) {
-            Console.WriteLine("THis is exception class ");
+        public DuplicateContactFoundException(string msg) :base (msg){
+            //Console.WriteLine("THis is exception class ");
         }
         public DuplicateContactFoundException() { }
     }
