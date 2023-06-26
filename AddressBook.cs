@@ -6,11 +6,13 @@ using System.Threading.Tasks;
 
 namespace ExceptionHandlingAddresssBook
 {
-    internal class AddressBook
+    public class AddressBook
     {
+        public static bool flag;
         List<Contact> contactList = new List<Contact>();
         public void addContact()
         {
+            flag = true;
             Console.WriteLine("Enter name");
             string name = Console.ReadLine();
             Console.WriteLine("Enter email");
@@ -35,22 +37,35 @@ namespace ExceptionHandlingAddresssBook
             }
             if (!isDuplicate)
             {
-                contactList.Add(contact);
-                Console.WriteLine("Contact added..");
+                if (flag)
+                {
+                    contactList.Add(contact);
+                    Console.WriteLine("Contact added..");
+                }
+                else
+                {
+                    Console.WriteLine("Contact not added..");
+                }
             }
             else
             {
                 throw new DuplicateContactFoundException("Duplicate Contact ... PLease Change name of the contact");
-                //Console.WriteLine("Duplicate Phone Number....");
             }
         }
 
         public void Display()
         {
+            int cout = 0;
             foreach (Contact contact in contactList)
             {
                 Console.WriteLine(contact);
+                cout++;
             }
+            if (cout == 0)
+            {
+                Console.WriteLine("List is empty");
+            }
+
         }
 
         public void delete()
