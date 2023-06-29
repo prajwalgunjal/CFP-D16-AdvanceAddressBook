@@ -1,7 +1,52 @@
-﻿namespace ExceptionHandlingAddresssBook
+﻿using System.Text.RegularExpressions;
+
+namespace ExceptionHandlingAddresssBook
 {
-    internal class Program
+    public class Program
     {
+
+        public bool TestFirstName(string name)
+        {
+            Regex Checkname = new Regex("^[A-Z][a-z]{2,}");
+            Match match = Checkname.Match(name);
+            if (match.Success)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        public bool TestEmail(string email)
+        {
+            Regex CheckEmail = new Regex("^\\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}\\b");
+
+            if (CheckEmail.IsMatch(email))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public bool TestPhoneNumber(string phno)
+        {
+            Regex Phone = new Regex("^(\\+?\\d{1,3})\\s\\d{10}$");
+
+            if (Phone.IsMatch(phno))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+
         static void Main(string[] args)
         {
             AddressBook addressBook = new AddressBook();
@@ -13,6 +58,7 @@
                 Console.WriteLine("2) Display Contact");
                 Console.WriteLine("3) Delete Contact");
                 Console.WriteLine("4) Edit Contact");
+                Console.WriteLine("5) Read From CSV");
                 Console.WriteLine("9) Exit");
                 string choiceString = Console.ReadLine();
                 int choice;
@@ -25,7 +71,7 @@
                             {
                                 try
                                 {
-                                    addressBook.addContact();
+                                    addressBook.AddContact();
                                 }
                                 catch(Exception somename)
                                 {
@@ -48,12 +94,18 @@
                             }
                         case 3:
                             {
-                                addressBook.delete();
+                                addressBook.Delete();
                                 break;
                             }
                         case 4:
                             {
                                 addressBook.Edit();
+                                break;
+                            }
+
+                    case 5:
+                            {
+                                addressBook.ReadFromCSVFile();
                                 break;
                             }
                         case 9:

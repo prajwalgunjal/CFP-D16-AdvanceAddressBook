@@ -1,5 +1,7 @@
-﻿using System;
+﻿using CsvHelper;
+using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,7 +12,7 @@ namespace ExceptionHandlingAddresssBook
     {
         public static bool flag;
         List<Contact> contactList = new List<Contact>();
-        public void addContact()
+        public void AddContact()
         {
             flag = true;
             Console.WriteLine("Enter name");
@@ -41,6 +43,7 @@ namespace ExceptionHandlingAddresssBook
                 {
                     contactList.Add(contact);
                     Console.WriteLine("Contact added..");
+                    AddToCSVFile();
                 }
                 else
                 {
@@ -49,10 +52,37 @@ namespace ExceptionHandlingAddresssBook
             }
             else
             {
-                throw new DuplicateContactFoundException("Duplicate Contact ... PLease Change name of the contact");
+                throw new DuplicateContactFoundException("Duplicate Contacts... PLease Change name of the contact");
             }
         }
+        public void AddToCSVFile()
+        {
+            string path = "C:\\Users\\prajw\\source\\repos\\ExceptionHandlingAddresssBook\\ExceptionHandlingAddresssBook\\Test.txt";
+            StreamWriter Writer = new StreamWriter(path,true);
+            CsvWriter CSVwriter = new CsvWriter(Writer, CultureInfo.InvariantCulture);
+            CSVwriter.WriteRecords(contactList);
+            CSVwriter.Dispose();
+            Writer.Close(); 
+        }
+        public void ReadFromCSVFile()
+         {
+             List<Contact> CSVFileList = new List<Contact>();
+             string path = "C:\\Users\\prajw\\source\\repos\\ExceptionHandlingAddresssBook\\ExceptionHandlingAddresssBook\\Test.txt";
 
+             StreamReader reader = new StreamReader(path);
+             CsvReader csvReader = new CsvReader(reader,CultureInfo.InvariantCulture);
+
+             CSVFileList = csvReader.GetRecords<Contact>().ToList();
+             foreach (Contact contact in CSVFileList)
+             {
+                 Console.WriteLine(contact);
+                Console.WriteLine();
+            }
+
+             reader.Close();
+             csvReader.Dispose();
+         }
+      
         public void Display()
         {
             int cout = 0;
@@ -68,7 +98,7 @@ namespace ExceptionHandlingAddresssBook
 
         }
 
-        public void delete()
+        public void Delete()
         {
             bool found = false;
             Console.WriteLine("Enter name of the contact: ");

@@ -9,20 +9,20 @@ namespace ExceptionHandlingAddresssBook
 {
     public class Contact
     {
-        public string Name;
-        public string Email;
-        public string Phone;
-        public string State;
-        public string City;
-        public string Zipcode;
+        public string Name { get; set; }
+        public string Email { get; set; }
+        public string Phone { get; set; }
+        public string State { get; set; }
+        public string City { get; set; }
+        public string Zipcode { get; set; }
 
-        public Contact(string name, string email, string phone, string state, string city, string zipcode)
+        public Contact(string Name, string Email, string Phone, string State, string City, string Zipcode)
         {
             Regex Checkname = new Regex("^[A-Z][a-z]{2,}");
-            Match match = Checkname.Match(name);
+            Match match = Checkname.Match(Name);
             if (match.Success)
             {
-                this.Name = name;
+                this.Name = Name;
             }
             else
             {
@@ -32,30 +32,30 @@ namespace ExceptionHandlingAddresssBook
 
             Regex CheckEmail = new Regex("^\\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}\\b");
 
-            if (CheckEmail.IsMatch(email))
+            if (CheckEmail.IsMatch(Email))
             {
-                this.Email = email;
+                this.Email = Email;
             }
             else
             {
                 AddressBook.flag = false;
                 Console.WriteLine("not a valid Email");
             }
+            
+            Regex Phoneno = new Regex("^(\\+?\\d{1,3})\\s\\d{10}$");
 
-            Regex Phone = new Regex("^(\\+?\\d{1,3})\\s\\d{10}$");
-
-            if (Phone.IsMatch(phone))
+            if (Phoneno.IsMatch(Phone))
             {
-                this.Phone = phone;
+                this.Phone = Phone;
             }
             else
             {
                 AddressBook.flag = false;
                 Console.WriteLine("not a valid Phone Number");
             }
-            this.State = state;
-            this.City = city;
-            this.Zipcode = zipcode;
+            this.State = State;
+            this.City = City;
+            this.Zipcode = Zipcode;
         }
         public override string ToString()
         {

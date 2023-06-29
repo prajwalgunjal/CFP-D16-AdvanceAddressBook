@@ -1,0 +1,4 @@
+Name,Email,Phone,State,City,Zipcode
+Prajwal,Prajwalgunjal@gmail.com,+91 9881640062,maharasgtra,pune,411034
+Name,Email,Phone,State,City,Zipcode
+Prajwal,Prajktagunjal8@gmail.com,+91 9763145640,mimbai,mumbai,411111

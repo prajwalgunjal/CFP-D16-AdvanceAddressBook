@@ -13,3 +13,5 @@ C:\Users\prajw\source\repos\ExceptionHandlingAddresssBook\ExceptionHandlingAddre
 C:\Users\prajw\source\repos\ExceptionHandlingAddresssBook\ExceptionHandlingAddresssBook\obj\Debug\net6.0\ExceptionHandlingAddresssBook.pdb
 C:\Users\prajw\source\repos\ExceptionHandlingAddresssBook\ExceptionHandlingAddresssBook\obj\Debug\net6.0\ExceptionHandlingAddresssBook.genruntimeconfig.cache
 C:\Users\prajw\source\repos\ExceptionHandlingAddresssBook\ExceptionHandlingAddresssBook\obj\Debug\net6.0\ref\ExceptionHandlingAddresssBook.dll
+C:\Users\prajw\source\repos\ExceptionHandlingAddresssBook\ExceptionHandlingAddresssBook\bin\Debug\net6.0\CsvHelper.dll
+C:\Users\prajw\source\repos\ExceptionHandlingAddresssBook\ExceptionHandlingAddresssBook\obj\Debug\net6.0\ExceptionHandlingAddresssBook.csproj.CopyComplete
