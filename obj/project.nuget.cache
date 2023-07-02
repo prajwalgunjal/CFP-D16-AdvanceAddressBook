@@ -1,10 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "rdmskQ0O7draAKK1i9k+go397tcoqiBJKXNve186TK+VCQStF9NkrVjTIw1yozQK0hxCb4SpkQ4sBLXJNk5omg==",
+  "dgSpecHash": "/GBE9Og6XfwvV/eA9J6rqKqaZMo/DmcSCmaqtOabyNVitlZ7ey2OiokMzsbokd+NMcnYwDistCpSjtebNAY0MA==",
   "success": true,
   "projectFilePath": "C:\\Users\\prajw\\source\\repos\\ExceptionHandlingAddresssBook\\ExceptionHandlingAddresssBook\\ExceptionHandlingAddresssBook.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\prajw\\.nuget\\packages\\csvhelper\\30.0.1\\csvhelper.30.0.1.nupkg.sha512"
+    "C:\\Users\\prajw\\.nuget\\packages\\csvhelper\\30.0.1\\csvhelper.30.0.1.nupkg.sha512",
+    "C:\\Users\\prajw\\.nuget\\packages\\newtonsoft.json\\13.0.3\\newtonsoft.json.13.0.3.nupkg.sha512"
   ],
   "logs": []
 }

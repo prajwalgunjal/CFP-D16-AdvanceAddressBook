@@ -1,9 +1,11 @@
 ﻿using CsvHelper;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace ExceptionHandlingAddresssBook
@@ -42,8 +44,7 @@ namespace ExceptionHandlingAddresssBook
                 if (flag)
                 {
                     contactList.Add(contact);
-                    Console.WriteLine("Contact added..");
-                    AddToCSVFile();
+                    Console.WriteLine("Contact added..");  
                 }
                 else
                 {
@@ -53,6 +54,27 @@ namespace ExceptionHandlingAddresssBook
             else
             {
                 throw new DuplicateContactFoundException("Duplicate Contacts... PLease Change name of the contact");
+            }
+        }
+
+        public void AdddToJSONFile()
+        {
+            string path = "C:\\Users\\prajw\\source\\repos\\ExceptionHandlingAddresssBook\\ExceptionHandlingAddresssBook\\TestJSON.txt";
+            string jsonContent = JsonConvert.SerializeObject(contactList);  
+            File.WriteAllText(path,jsonContent);
+
+        }
+
+        public void ReadFronJSONFile()
+        {
+            List<Contact> JSONFileList = new List<Contact>();
+
+            string path = "C:\\Users\\prajw\\source\\repos\\ExceptionHandlingAddresssBook\\ExceptionHandlingAddresssBook\\TestJSON.txt";
+            string fileContent = File.ReadAllText(path);
+            JSONFileList = JsonConvert.DeserializeObject<List<Contact>>(fileContent);
+            foreach (var contact in JSONFileList)
+            {
+                Console.WriteLine(contact);
             }
         }
         public void AddToCSVFile()
@@ -82,7 +104,7 @@ namespace ExceptionHandlingAddresssBook
              reader.Close();
              csvReader.Dispose();
          }
-      
+
         public void Display()
         {
             int cout = 0;

@@ -45,8 +45,6 @@ namespace ExceptionHandlingAddresssBook
                 return false;
             }
         }
-
-
         static void Main(string[] args)
         {
             AddressBook addressBook = new AddressBook();
@@ -59,6 +57,7 @@ namespace ExceptionHandlingAddresssBook
                 Console.WriteLine("3) Delete Contact");
                 Console.WriteLine("4) Edit Contact");
                 Console.WriteLine("5) Read From CSV");
+                Console.WriteLine("6) Read From JSON");
                 Console.WriteLine("9) Exit");
                 string choiceString = Console.ReadLine();
                 int choice;
@@ -94,7 +93,10 @@ namespace ExceptionHandlingAddresssBook
                             }
                         case 3:
                             {
-                                addressBook.Delete();
+                                if (addressBook.Delete())
+                                {
+                                    Console.WriteLine("Contact deleted ...");
+                                }
                                 break;
                             }
                         case 4:
@@ -108,8 +110,15 @@ namespace ExceptionHandlingAddresssBook
                                 addressBook.ReadFromCSVFile();
                                 break;
                             }
+                        case 6:
+                            {
+                                addressBook.ReadFronJSONFile();
+                                break;
+                            }
                         case 9:
                             {
+                                addressBook.AddToCSVFile();
+                                addressBook.AdddToJSONFile();
                                 Environment.Exit(0);
                                 break;
                             }
