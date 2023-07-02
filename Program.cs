@@ -70,7 +70,10 @@ namespace ExceptionHandlingAddresssBook
                             {
                                 try
                                 {
-                                    addressBook.AddContact();
+                                    if (addressBook.AddContact())
+                                    {
+                                        Console.WriteLine("Contact Added Successfully");
+                                    }
                                 }
                                 catch(Exception somename)
                                 {
@@ -83,7 +86,10 @@ namespace ExceptionHandlingAddresssBook
                             {
                                 try
                                 {
-                                    addressBook.Display();
+                                   if(addressBook.Display()) ;
+                                    {
+                                        Console.WriteLine("Contact deleted Successfully");
+                                    }
                                 }
                                 catch (Exception)
                                 {
@@ -100,19 +106,32 @@ namespace ExceptionHandlingAddresssBook
                                 break;
                             }
                         case 4:
-                            {
-                                addressBook.Edit();
+                            { 
+                                if (addressBook.Edit())
+                                {
+                                    Console.WriteLine("Contact Editied Successfully");
+                                }
+                                else
+                                {
+                                    Console.WriteLine("Contact is not editied");
+                                }
                                 break;
                             }
 
                     case 5:
                             {
-                                addressBook.ReadFromCSVFile();
+                                if (!addressBook.ReadFromCSVFile())
+                                {
+                                    Console.WriteLine("Something Error");
+                                }
                                 break;
                             }
                         case 6:
                             {
-                                addressBook.ReadFronJSONFile();
+                                if (!addressBook.ReadFronJSONFile())
+                                {
+                                    Console.WriteLine("Something Error");
+                                }
                                 break;
                             }
                         case 9:

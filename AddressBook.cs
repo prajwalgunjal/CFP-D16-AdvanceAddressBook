@@ -14,7 +14,7 @@ namespace ExceptionHandlingAddresssBook
     {
         public static bool flag;
         List<Contact> contactList = new List<Contact>();
-        public void AddContact()
+        public bool AddContact()
         {
             flag = true;
             Console.WriteLine("Enter name");
@@ -44,11 +44,11 @@ namespace ExceptionHandlingAddresssBook
                 if (flag)
                 {
                     contactList.Add(contact);
-                    Console.WriteLine("Contact added..");  
+                    return true;
                 }
                 else
                 {
-                    Console.WriteLine("Contact not added..");
+                   return false;
                 }
             }
             else
@@ -65,16 +65,23 @@ namespace ExceptionHandlingAddresssBook
 
         }
 
-        public void ReadFronJSONFile()
+        public bool ReadFronJSONFile()
         {
             List<Contact> JSONFileList = new List<Contact>();
 
             string path = "C:\\Users\\prajw\\source\\repos\\ExceptionHandlingAddresssBook\\ExceptionHandlingAddresssBook\\TestJSON.txt";
-            string fileContent = File.ReadAllText(path);
-            JSONFileList = JsonConvert.DeserializeObject<List<Contact>>(fileContent);
-            foreach (var contact in JSONFileList)
+            try
             {
-                Console.WriteLine(contact);
+                string fileContent = File.ReadAllText(path);
+                JSONFileList = JsonConvert.DeserializeObject<List<Contact>>(fileContent);
+                foreach (var contact in JSONFileList)
+                {
+                    Console.WriteLine(contact);
+                }
+                return true;
+            }
+            catch (Exception ex) { 
+            return false;
             }
         }
         public void AddToCSVFile()
@@ -86,41 +93,44 @@ namespace ExceptionHandlingAddresssBook
             CSVwriter.Dispose();
             Writer.Close(); 
         }
-        public void ReadFromCSVFile()
+        public bool ReadFromCSVFile()
          {
              List<Contact> CSVFileList = new List<Contact>();
              string path = "C:\\Users\\prajw\\source\\repos\\ExceptionHandlingAddresssBook\\ExceptionHandlingAddresssBook\\Test.txt";
+            try
+            {
+                StreamReader reader = new StreamReader(path);
+                CsvReader csvReader = new CsvReader(reader, CultureInfo.InvariantCulture);
 
-             StreamReader reader = new StreamReader(path);
-             CsvReader csvReader = new CsvReader(reader,CultureInfo.InvariantCulture);
-
-             CSVFileList = csvReader.GetRecords<Contact>().ToList();
-             foreach (Contact contact in CSVFileList)
-             {
-                 Console.WriteLine(contact);
-                Console.WriteLine();
+                CSVFileList = csvReader.GetRecords<Contact>().ToList();
+                foreach (Contact contact in CSVFileList)
+                {
+                    Console.WriteLine(contact);
+                    Console.WriteLine();
+                }
+                reader.Close();
+                csvReader.Dispose();
+                return true;
             }
-
-             reader.Close();
-             csvReader.Dispose();
+            catch (Exception ex)
+            {
+                return false;
+            }
+            
          }
 
-        public void Display()
+        public bool Display()
         {
             int cout = 0;
             foreach (Contact contact in contactList)
             {
                 Console.WriteLine(contact);
-                cout++;
+                return true;
             }
-            if (cout == 0)
-            {
-                Console.WriteLine("List is empty");
-            }
-
+            
+            return false;
         }
-
-        public void Delete()
+        public bool Delete()
         {
             bool found = false;
             Console.WriteLine("Enter name of the contact: ");
@@ -132,18 +142,17 @@ namespace ExceptionHandlingAddresssBook
                 {
                     found = true;
                     contactList.Remove(contact);
-                    Console.WriteLine("Contact deleted ....");
-                    return;
+                    return true;
                 }
             }
             if (!found) 
             {
                     throw new ContactNotFoundException("Contact not found........");
             }
-            //Console.WriteLine($"{input} not found in addressBook");
+            return false;
         }
 
-        public void Edit()
+        public bool Edit()
         {
             Console.WriteLine("Enter name of the contact: ");
             string input = Console.ReadLine();
@@ -170,10 +179,11 @@ namespace ExceptionHandlingAddresssBook
                     contact.State = state;
                     contact.City = city;
                     contact.Zipcode = zip;
-                    Console.WriteLine("Contact Updated..");
-                    return;
+                    return true;
                 }
+                
             }
+            return false;
         }
     }
 }
