@@ -1,10 +1,8 @@
 ﻿using System.Text.RegularExpressions;
-
 namespace ExceptionHandlingAddresssBook
 {
     public class Program
     {
-
         public bool TestFirstName(string name)
         {
             Regex Checkname = new Regex("^[A-Z][a-z]{2,}");
@@ -31,7 +29,6 @@ namespace ExceptionHandlingAddresssBook
                 return false;
             }
         }
-
         public bool TestPhoneNumber(string phno)
         {
             Regex Phone = new Regex("^(\\+?\\d{1,3})\\s\\d{10}$");

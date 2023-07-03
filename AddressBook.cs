@@ -4,9 +4,11 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace ExceptionHandlingAddresssBook
 {
@@ -59,7 +61,7 @@ namespace ExceptionHandlingAddresssBook
 
         public void AdddToJSONFile()
         {
-            string path = "C:\\Users\\prajw\\source\\repos\\ExceptionHandlingAddresssBook\\ExceptionHandlingAddresssBook\\TestJSON.txt";
+            string path = "C:\\Users\\prajw\\source\\repos\\ExceptionHandlingAddresssBook\\ExceptionHandlingAddresssBook\\TestJSON.json";
             string jsonContent = JsonConvert.SerializeObject(contactList);  
             File.WriteAllText(path,jsonContent);
 
@@ -69,7 +71,7 @@ namespace ExceptionHandlingAddresssBook
         {
             List<Contact> JSONFileList = new List<Contact>();
 
-            string path = "C:\\Users\\prajw\\source\\repos\\ExceptionHandlingAddresssBook\\ExceptionHandlingAddresssBook\\TestJSON.txt";
+            string path = "C:\\Users\\prajw\\source\\repos\\ExceptionHandlingAddresssBook\\ExceptionHandlingAddresssBook\\TestJSON.json";
             try
             {
                 string fileContent = File.ReadAllText(path);
@@ -84,9 +86,46 @@ namespace ExceptionHandlingAddresssBook
             return false;
             }
         }
+
+        public bool ReadJson(string name,string email, string phone,string state, string city, string zip)
+        {
+            Edit();
+
+            List<Contact> JSONFileList = new List<Contact>();
+
+            string path = "C:\\Users\\prajw\\source\\repos\\ExceptionHandlingAddresssBook\\ExceptionHandlingAddresssBook\\TestJSON.json";
+            try
+            {
+                string fileContent = File.ReadAllText(path);
+                JSONFileList = JsonConvert.DeserializeObject<List<Contact>>(fileContent);
+                foreach (var contact in JSONFileList)
+                {
+                    if(contact.Name == name)
+                    {
+                        contact.Name = name;
+                        contact.Email = email;
+                        contact.Phone = phone;
+                        contact.State = state;
+                        contact.City = city;
+                        contact.Zipcode = zip;
+                        break;
+                    }
+                }
+                AdddToJSONFile();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
+
+
+
+
         public void AddToCSVFile()
         {
-            string path = "C:\\Users\\prajw\\source\\repos\\ExceptionHandlingAddresssBook\\ExceptionHandlingAddresssBook\\Test.txt";
+            string path = "C:\\Users\\prajw\\source\\repos\\ExceptionHandlingAddresssBook\\ExceptionHandlingAddresssBook\\Test.csv";
             StreamWriter Writer = new StreamWriter(path,true);
             CsvWriter CSVwriter = new CsvWriter(Writer, CultureInfo.InvariantCulture);
             CSVwriter.WriteRecords(contactList);
@@ -96,7 +135,7 @@ namespace ExceptionHandlingAddresssBook
         public bool ReadFromCSVFile()
          {
              List<Contact> CSVFileList = new List<Contact>();
-             string path = "C:\\Users\\prajw\\source\\repos\\ExceptionHandlingAddresssBook\\ExceptionHandlingAddresssBook\\Test.txt";
+             string path = "C:\\Users\\prajw\\source\\repos\\ExceptionHandlingAddresssBook\\ExceptionHandlingAddresssBook\\Test.csv";
             try
             {
                 StreamReader reader = new StreamReader(path);
@@ -121,7 +160,6 @@ namespace ExceptionHandlingAddresssBook
 
         public bool Display()
         {
-            int cout = 0;
             foreach (Contact contact in contactList)
             {
                 Console.WriteLine(contact);
@@ -179,7 +217,9 @@ namespace ExceptionHandlingAddresssBook
                     contact.State = state;
                     contact.City = city;
                     contact.Zipcode = zip;
+                   ReadJson(name,email,phone,state,city,zip);
                     return true;
+
                 }
                 
             }
