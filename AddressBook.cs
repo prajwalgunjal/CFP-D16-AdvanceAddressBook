@@ -16,6 +16,13 @@ namespace ExceptionHandlingAddresssBook
     {
         public static bool flag;
         List<Contact> contactList = new List<Contact>();
+
+        string path = "C:\\Users\\prajw\\source\\repos\\ExceptionHandlingAddresssBook\\ExceptionHandlingAddresssBook\\TestJSON.json";
+
+
+        public AddressBook() {
+            contactList = LoadContactsFromFile();
+                }
         public bool AddContact()
         {
             flag = true;
@@ -71,7 +78,6 @@ namespace ExceptionHandlingAddresssBook
         {
             List<Contact> JSONFileList = new List<Contact>();
 
-            string path = "C:\\Users\\prajw\\source\\repos\\ExceptionHandlingAddresssBook\\ExceptionHandlingAddresssBook\\TestJSON.json";
             try
             {
                 string fileContent = File.ReadAllText(path);
@@ -86,43 +92,6 @@ namespace ExceptionHandlingAddresssBook
             return false;
             }
         }
-
-        public bool ReadJson(string name,string email, string phone,string state, string city, string zip)
-        {
-            Edit();
-
-            List<Contact> JSONFileList = new List<Contact>();
-
-            string path = "C:\\Users\\prajw\\source\\repos\\ExceptionHandlingAddresssBook\\ExceptionHandlingAddresssBook\\TestJSON.json";
-            try
-            {
-                string fileContent = File.ReadAllText(path);
-                JSONFileList = JsonConvert.DeserializeObject<List<Contact>>(fileContent);
-                foreach (var contact in JSONFileList)
-                {
-                    if(contact.Name == name)
-                    {
-                        contact.Name = name;
-                        contact.Email = email;
-                        contact.Phone = phone;
-                        contact.State = state;
-                        contact.City = city;
-                        contact.Zipcode = zip;
-                        break;
-                    }
-                }
-                AdddToJSONFile();
-                return true;
-            }
-            catch (Exception ex)
-            {
-                return false;
-            }
-        }
-
-
-
-
         public void AddToCSVFile()
         {
             string path = "C:\\Users\\prajw\\source\\repos\\ExceptionHandlingAddresssBook\\ExceptionHandlingAddresssBook\\Test.csv";
@@ -160,6 +129,7 @@ namespace ExceptionHandlingAddresssBook
 
         public bool Display()
         {
+            contactList = LoadContactsFromFile();
             foreach (Contact contact in contactList)
             {
                 Console.WriteLine(contact);
@@ -189,7 +159,37 @@ namespace ExceptionHandlingAddresssBook
             }
             return false;
         }
+        /*public bool ReadJson(string name, string email, string phone, string state, string city, string zip)
+        {
+            Edit();
 
+            List<Contact> JSONFileList = new List<Contact>();
+
+            try
+            {
+                string fileContent = File.ReadAllText(path);
+                JSONFileList = JsonConvert.DeserializeObject<List<Contact>>(fileContent);
+                foreach (var contact in JSONFileList)
+                {
+                    if (contact.Name == name)
+                    {
+                        contact.Name = name;
+                        contact.Email = email;
+                        contact.Phone = phone;
+                        contact.State = state;
+                        contact.City = city;
+                        contact.Zipcode = zip;
+                        break;
+                    }
+                }
+                AdddToJSONFile();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }*/
         public bool Edit()
         {
             Console.WriteLine("Enter name of the contact: ");
@@ -217,13 +217,37 @@ namespace ExceptionHandlingAddresssBook
                     contact.State = state;
                     contact.City = city;
                     contact.Zipcode = zip;
-                   ReadJson(name,email,phone,state,city,zip);
+
+                    AdddToJSONFile();
+                  // ReadJson(name,email,phone,state,city,zip);
                     return true;
 
                 }
-                
             }
             return false;
+        }
+
+        public void SaveContactsToFile()
+        {
+            JsonSerializerSettings settings = new JsonSerializerSettings
+            {
+                Formatting = Formatting.Indented
+            };
+
+            string json = JsonConvert.SerializeObject(contactList, settings);
+            File.WriteAllText(path, json);
+        }
+
+        private List<Contact> LoadContactsFromFile()
+        {
+            if (File.Exists(path))
+            {
+                string json = File.ReadAllText(path);
+                var contacts = JsonConvert.DeserializeObject<List<Contact>>(json);
+                return contacts ?? new List<Contact>();
+            }
+
+            return new List<Contact>();
         }
     }
 }
