@@ -28,58 +28,74 @@ namespace ExceptionHandlingAddresssBook
         public bool AddContact(string name , string email, string phone, string city,string state, string zip)
         {
             flag = true;
+            bool flag2 = true;
 
             if (!validationMethods.ValidateName(name))
             {
                 Console.WriteLine("INVALID NAME!!! Enter the valid data...\n");
+                flag2= false;
                 return false;
             }
 
             if (!validationMethods.ValidateEmail(email))
             {
                 Console.WriteLine("INVALID EMAIL!!! Enter the valid data...\n");
+                flag2 = false;
+
                 return false;
             }
 
             if (!validationMethods.ValidatePhoneNumber(phone))
             {
+
                 Console.WriteLine("INVALID PHONE NUMBER!!! Enter the valid data...\n");
+                flag2 = false;
+
                 return false;
             }
 
             if (!validationMethods.ValidateZIP(zip))
             {
                 Console.WriteLine("INVALID ZIP CODE!!! Enter the valid data...\n");
+                flag2 = false;
+
                 return false;
             }
-
-            Contact contact = new Contact(name, email, phone, state, city, zip);
-            bool isDuplicate = false;
-            foreach (Contact existingContact in contactList)
+            if (flag2)
             {
-                if (existingContact.Phone == phone)
+                Contact contact = new Contact(name, email, phone, state, city, zip);
+                bool isDuplicate = false;
+                foreach (Contact existingContact in contactList)
                 {
-                    isDuplicate = true;
-                    break;
+                    if (existingContact.Phone == phone)
+                    {
+                        isDuplicate = true;
+                        break;
+                    }
                 }
-            }
-            if (!isDuplicate)
-            {
-                if (flag)
+                if (!isDuplicate)
                 {
-                    contactList.Add(contact);
-                    AdddToJSONFile();
-                    AddToCSVFile();
-                    return true;
+                    if (flag)
+                    {
+                        contactList.Add(contact);
+                        AdddToJSONFile();
+                        AddToCSVFile();
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
                 }
                 else
                 {
-                   return false;
+                    throw new DuplicateContactFoundException("Duplicate Contacts... PLease Change name of the contact");
                 }
             }
             else
             {
-                throw new DuplicateContactFoundException("Duplicate Contacts... PLease Change name of the contact");
+                Console.WriteLine("Contact not added to AddressBook");
+                return false;
             }
         }
 
@@ -152,10 +168,9 @@ namespace ExceptionHandlingAddresssBook
             foreach (Contact contact in contactList)
             {
                 Console.WriteLine(contact);
-                return true;
             }
-            
-            return false;
+
+            return true;
         }
         public bool Delete()
         {
@@ -269,7 +284,6 @@ namespace ExceptionHandlingAddresssBook
                 var contacts = JsonConvert.DeserializeObject<List<Contact>>(json);
                 return contacts ?? new List<Contact>();
             }
-
             return new List<Contact>();
         }
     }
