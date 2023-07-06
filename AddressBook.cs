@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Numerics;
+using System.Reflection.Emit;
 using System.Text;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
@@ -16,6 +17,7 @@ namespace ExceptionHandlingAddresssBook
     {
         public static bool flag;
         List<Contact> contactList = new List<Contact>();
+        ValidationMethods validationMethods = new ValidationMethods();
 
         string path = "C:\\Users\\prajw\\source\\repos\\ExceptionHandlingAddresssBook\\ExceptionHandlingAddresssBook\\TestJSON.json";
 
@@ -23,21 +25,34 @@ namespace ExceptionHandlingAddresssBook
         public AddressBook() {
             contactList = LoadContactsFromFile();
                 }
-        public bool AddContact()
+        public bool AddContact(string name , string email, string phone, string city,string state, string zip)
         {
             flag = true;
-            Console.WriteLine("Enter name");
-            string name = Console.ReadLine();
-            Console.WriteLine("Enter email");
-            string email = Console.ReadLine();
-            Console.WriteLine("Enter phone");
-            string phone = Console.ReadLine();
-            Console.WriteLine("Enter state");
-            string state = Console.ReadLine();
-            Console.WriteLine("Enter city");
-            string city = Console.ReadLine();
-            Console.WriteLine("Enter zip");
-            string zip = Console.ReadLine();
+
+            if (!validationMethods.ValidateName(name))
+            {
+                Console.WriteLine("INVALID NAME!!! Enter the valid data...\n");
+                return false;
+            }
+
+            if (!validationMethods.ValidateEmail(email))
+            {
+                Console.WriteLine("INVALID EMAIL!!! Enter the valid data...\n");
+                return false;
+            }
+
+            if (!validationMethods.ValidatePhoneNumber(phone))
+            {
+                Console.WriteLine("INVALID PHONE NUMBER!!! Enter the valid data...\n");
+                return false;
+            }
+
+            if (!validationMethods.ValidateZIP(zip))
+            {
+                Console.WriteLine("INVALID ZIP CODE!!! Enter the valid data...\n");
+                return false;
+            }
+
             Contact contact = new Contact(name, email, phone, state, city, zip);
             bool isDuplicate = false;
             foreach (Contact existingContact in contactList)
@@ -53,6 +68,8 @@ namespace ExceptionHandlingAddresssBook
                 if (flag)
                 {
                     contactList.Add(contact);
+                    AdddToJSONFile();
+                    AddToCSVFile();
                     return true;
                 }
                 else
@@ -68,7 +85,6 @@ namespace ExceptionHandlingAddresssBook
 
         public void AdddToJSONFile()
         {
-            string path = "C:\\Users\\prajw\\source\\repos\\ExceptionHandlingAddresssBook\\ExceptionHandlingAddresssBook\\TestJSON.json";
             string jsonContent = JsonConvert.SerializeObject(contactList);  
             File.WriteAllText(path,jsonContent);
 
@@ -130,6 +146,9 @@ namespace ExceptionHandlingAddresssBook
         public bool Display()
         {
             contactList = LoadContactsFromFile();
+            if (contactList.Count == 0) {
+                Console.WriteLine("list is empty");
+            }
             foreach (Contact contact in contactList)
             {
                 Console.WriteLine(contact);
@@ -141,6 +160,10 @@ namespace ExceptionHandlingAddresssBook
         public bool Delete()
         {
             bool found = false;
+            if (contactList.Count == 0)
+            {
+                Console.WriteLine("list is empty");
+            }
             Console.WriteLine("Enter name of the contact: ");
             string input = Console.ReadLine();
             for (int i = 0; i < contactList.Count; i++)
@@ -227,7 +250,7 @@ namespace ExceptionHandlingAddresssBook
             return false;
         }
 
-        public void SaveContactsToFile()
+       /* public void SaveContactsToFile()
         {
             JsonSerializerSettings settings = new JsonSerializerSettings
             {
@@ -236,7 +259,7 @@ namespace ExceptionHandlingAddresssBook
 
             string json = JsonConvert.SerializeObject(contactList, settings);
             File.WriteAllText(path, json);
-        }
+        }*/
 
         private List<Contact> LoadContactsFromFile()
         {

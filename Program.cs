@@ -67,7 +67,20 @@ namespace ExceptionHandlingAddresssBook
                             {
                                 try
                                 {
-                                    if (addressBook.AddContact())
+                                    Console.WriteLine("Enter name");
+                                    string name = Console.ReadLine();
+                                    Console.WriteLine("Enter email");
+                                    string email = Console.ReadLine();
+                                    Console.WriteLine("Enter phone");
+                                    string phone = Console.ReadLine();
+                                    Console.WriteLine("Enter state");
+                                    string state = Console.ReadLine();
+                                    Console.WriteLine("Enter city");
+                                    string city = Console.ReadLine();
+                                    Console.WriteLine("Enter zip");
+                                    string zip = Console.ReadLine();
+
+                                    if (addressBook.AddContact(name,email,phone,city,state,zip))
                                     {
                                         Console.WriteLine("Contact Added Successfully");
                                     }
@@ -83,9 +96,9 @@ namespace ExceptionHandlingAddresssBook
                             {
                                 try
                                 {
-                                   if(addressBook.Display()) ;
+                                   if(addressBook.Display())
                                     {
-                                        Console.WriteLine("Contact deleted Successfully");
+                                        Console.WriteLine("contact displyed");
                                     }
                                 }
                                 catch (Exception)
